@@ -1,0 +1,17 @@
+name: right
+description: UI kit for flutter apps
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: '>=2.18.5 <3.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  superellipse_shape: ^0.2.0
