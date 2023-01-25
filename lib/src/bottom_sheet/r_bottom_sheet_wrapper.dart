@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:r_ui_kit/src/bottom_sheet/r_bottom_sheet.dart';
+import 'package:right/src/bottom_sheet/r_bottom_sheet.dart';
 
 final _key = GlobalKey<NavigatorState>();
 

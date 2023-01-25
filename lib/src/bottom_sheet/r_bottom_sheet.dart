@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:r_ui_kit/src/utils/sizes.dart';
+import 'package:right/src/utils/sizes.dart';
 
-class RBottomSheetRoute<T> extends PageRoute<T> {
+class RBottomSheetRoute<T> extends PopupRoute<T> {
   final Widget Function(ScrollController controller) builder;
   final bool root;
   final double openPercentage;
@@ -47,7 +47,8 @@ class RBottomSheetRoute<T> extends PageRoute<T> {
       _innerSc.jumpTo(0);
     }
     if (_innerSc.offset == 0) {
-      controller?.value = initialValue - (upd.delta.dy / Sizes.screenSize.height);
+      controller?.value =
+          initialValue - (upd.delta.dy / Sizes.screenSize.height);
     }
   }
 
@@ -72,14 +73,14 @@ class RBottomSheetRoute<T> extends PageRoute<T> {
   }
 
   @override
-  Widget buildPage(
-      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     if (root) return builder(_innerSc);
     return RawGestureDetector(
       behavior: HitTestBehavior.opaque,
       gestures: {
-        _AllowMultipleGestureRecognizer:
-            GestureRecognizerFactoryWithHandlers<_AllowMultipleGestureRecognizer>(
+        _AllowMultipleGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+            _AllowMultipleGestureRecognizer>(
           () => _AllowMultipleGestureRecognizer(), //constructor
           (_AllowMultipleGestureRecognizer instance) {
             instance.onUpdate = _onUpdate;
@@ -115,26 +116,23 @@ class RBottomSheetRoute<T> extends PageRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return SlideTransition(
-      transformHitTests: false,
-      position: animation.drive(
-        Tween(
-          begin: const Offset(0, 1),
-          end: const Offset(0, 0),
+    return DecoratedBoxTransition(
+      position: DecorationPosition.background,
+      decoration: animation.drive(
+        DecorationTween(
+          begin: BoxDecoration(color: Colors.transparent),
+          end: BoxDecoration(color: Colors.black38),
         ),
       ),
-      child: RepaintBoundary(
-        child: AnimatedBuilder(
-          animation: secondaryAnimation,
-          builder: (_, child) {
-            return DecoratedBox(
-              position: DecorationPosition.foreground,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(secondaryAnimation.value * 0.33),
-              ),
-              child: child,
-            );
-          },
+      child: SlideTransition(
+        transformHitTests: false,
+        position: animation.drive(
+          Tween(
+            begin: const Offset(0, 1),
+            end: const Offset(0, 0),
+          ),
+        ),
+        child: RepaintBoundary(
           child: IgnorePointer(
             ignoring: _ignoring,
             child: child,
@@ -149,6 +147,9 @@ class RBottomSheetRoute<T> extends PageRoute<T> {
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 300);
+
+  @override
+  bool get barrierDismissible => true;
 }
 
 class _AllowMultipleGestureRecognizer extends VerticalDragGestureRecognizer {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:r_ui_kit/src/r_button.dart';
-import 'package:r_ui_kit/src/utils/keyboard_spacer.dart';
-import 'package:r_ui_kit/src/utils/sizes.dart';
+import 'package:right/src/r_button.dart';
+import 'package:right/src/utils/keyboard_spacer.dart';
+import 'package:right/src/utils/sizes.dart';
 
 class RScaffold extends StatelessWidget {
   final Color? backGroundColor;

@@ -142,6 +142,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  superellipse_shape:
+    dependency: transitive
+    description:
+      name: superellipse_shape
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   term_glyph:
     dependency: transitive
     description:

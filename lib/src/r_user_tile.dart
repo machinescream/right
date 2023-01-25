@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:r_ui_kit/src/r_text.dart';
+import 'package:right/src/r_text.dart';
 
 class RUserTile extends StatelessWidget {
   final String? imageUrl;

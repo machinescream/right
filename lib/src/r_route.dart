@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
-import 'package:r_ui_kit/src/utils/sizes.dart';
+import 'package:flutter/material.dart';
+import 'package:right/src/utils/sizes.dart';
 
 class RRoute<T> extends PageRoute<T> {
   final Widget child;
@@ -20,8 +20,8 @@ class RRoute<T> extends PageRoute<T> {
   bool get opaque => false;
 
   @override
-  Widget buildPage(
-      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     return child;
   }
 
@@ -41,10 +41,9 @@ class RRoute<T> extends PageRoute<T> {
     });
   }
 
-  void _onHorizontalDragUpdate(DragUpdateDetails upd){
+  void _onHorizontalDragUpdate(DragUpdateDetails upd) {
     final initialValue = controller?.value ?? 1.0;
-    controller?.value =
-        initialValue - (upd.delta.dx / Sizes.screenSize.width);
+    controller?.value = initialValue - (upd.delta.dx / Sizes.screenSize.width);
   }
 
   @override
@@ -72,19 +71,29 @@ class RRoute<T> extends PageRoute<T> {
           ),
         ),
         child: RepaintBoundary(
-          child: navigator.canPop()
-              ? IgnorePointer(
-                  ignoring: _ignoring,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onHorizontalDragEnd: (upd) {
-                      _onHorizontalDragEnd(upd, () => Navigator.of(context).pop());
-                    },
-                    onHorizontalDragUpdate: _onHorizontalDragUpdate,
-                    child: child,
-                  ),
-                )
-              : child,
+          child: DecoratedBoxTransition(
+            position: DecorationPosition.foreground,
+            decoration: secondaryAnimation.drive(
+              DecorationTween(
+                begin: BoxDecoration(color: Colors.transparent),
+                end: BoxDecoration(color: Colors.black87),
+              ),
+            ),
+            child: navigator.canPop()
+                ? IgnorePointer(
+                    ignoring: _ignoring,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onHorizontalDragEnd: (upd) {
+                        _onHorizontalDragEnd(
+                            upd, () => Navigator.of(context).pop());
+                      },
+                      onHorizontalDragUpdate: _onHorizontalDragUpdate,
+                      child: child,
+                    ),
+                  )
+                : child,
+          ),
         ),
       ),
     );
@@ -94,5 +103,5 @@ class RRoute<T> extends PageRoute<T> {
   bool get maintainState => true;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 200);
+  Duration get transitionDuration => const Duration(milliseconds: 300);
 }

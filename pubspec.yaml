@@ -8,10 +8,11 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  superellipse_shape: ^0.2.0
   flutter:
     sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  superellipse_shape: ^0.2.0
+
