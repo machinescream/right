@@ -1,8 +1,6 @@
 library right;
 
 export 'package:right/src/bottom_sheet/r_bottom_sheet.dart';
-export 'package:right/src/bottom_sheet/r_bottom_sheet_wrapper.dart';
-
 export 'package:right/src/utils/sizes.dart';
 export 'package:right/src/utils/brightness_handler.dart';
 export 'package:right/src/utils/emojis_warm_up.dart';
