@@ -14,3 +14,4 @@ export 'package:right/src/r_text.dart';
 export 'package:right/src/r_text_field.dart';
 export 'package:right/src/r_user_tile.dart';
 export 'package:right/src/r_app.dart';
+export 'package:right/src/r_navigator.dart';

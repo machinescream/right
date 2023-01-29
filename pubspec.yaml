@@ -1,18 +1,18 @@
 name: right
 description: UI kit for flutter apps
 version: 0.0.2
-homepage:
+homepage: null
 
 environment:
   sdk: '>=2.18.5 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
-  superellipse_shape: ^0.2.0
   flutter:
     sdk: flutter
+  superellipse_shape: ^0.2.0
 
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
-
