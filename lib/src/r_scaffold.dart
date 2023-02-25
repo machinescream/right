@@ -3,108 +3,139 @@ import 'package:right/src/r_button.dart';
 import 'package:right/src/utils/keyboard_spacer.dart';
 import 'package:right/src/utils/sizes.dart';
 
+import 'r_bottom_sheet.dart';
+
 class RScaffold extends StatelessWidget {
-  final Color? backGroundColor;
-  final Color? iconsColor;
-  final bool handleSafeArea;
+  final Color backGroundColor, iconsColor;
   final VoidCallback? onLeadingTap, onTrailingTap;
-  final Widget? title;
-  final Widget? child, trailingWidget;
-  final IconData? trailingIcon;
-  final IconData? leadingIcon;
-  final bool handleKeyBoard;
-  final bool showNavigationBar;
-  final TextStyle? titleTextStyle;
-  final int paddingAboveKeyboard;
+  final Widget? title, child, trailingWidget;
+  final IconData? leadingIcon, trailingIcon;
 
   const RScaffold({
-    Key? key,
-    this.backGroundColor,
+    super.key,
+    this.backGroundColor = Colors.white,
+    this.iconsColor = Colors.white,
     this.onLeadingTap,
     this.title,
     this.child,
     this.trailingIcon,
     this.onTrailingTap,
     this.trailingWidget,
-    this.handleSafeArea = true,
     this.leadingIcon,
-    this.handleKeyBoard = false,
-    this.iconsColor,
-    this.showNavigationBar = true,
-    this.titleTextStyle,
-    this.paddingAboveKeyboard = 0,
-  }) : super(key: key);
+  });
 
   static const appBarHeight = 54.0;
   static const iconButtonSize = 44.0;
 
   @override
-  Widget build(BuildContext context) => ColoredBox(
-        color: backGroundColor ?? Colors.transparent,
+  Widget build(BuildContext context) {
+    return ColoredBox(
+      color: backGroundColor,
+      child: RawGestureDetector(
+        behavior: HitTestBehavior.opaque,
+        gestures: {
+          AllowMultipleGestureRecognizer: GestureRecognizerFactoryWithHandlers<AllowMultipleGestureRecognizer>(
+            () => AllowMultipleGestureRecognizer(), //constructor
+            (AllowMultipleGestureRecognizer instance) {
+              instance.onUpdate = (_) {
+                FocusManager.instance.primaryFocus?.unfocus();
+              };
+            },
+          )
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (showNavigationBar)
-              Padding(
-                padding: EdgeInsets.only(top: Sizes.effectiveTopPadding),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(width: 15),
-                    SizedBox.square(
-                      dimension: iconButtonSize,
-                      child: ModalRoute.of(context)!.canPop
-                          ? RButton(
-                              color: Colors.transparent,
-                              padding: EdgeInsets.zero,
-                              child: Icon(
-                                Icons.arrow_back_rounded,
-                                size: 24,
-                                color: iconsColor ?? Colors.black,
-                              ),
-                              onPressed: () {
-                                if (onLeadingTap == null) {
-                                  Navigator.of(context).pop();
-                                } else {
-                                  onLeadingTap!();
-                                }
-                              },
-                            )
-                          : nothing,
-                    ),
-                    Expanded(
-                      child: title != null ? Center(child: title!) : nothing,
-                    ),
-                    SizedBox.square(
-                      dimension: iconButtonSize,
-                      child: trailingIcon != null || trailingWidget != null
-                          ? RButton(
-                              color: Colors.transparent,
-                              padding: EdgeInsets.zero,
-                              onPressed: () => onTrailingTap?.call(),
-                              child: trailingIcon != null
-                                  ? Icon(
-                                      trailingIcon,
-                                      size: 24,
-                                      color: iconsColor ?? Colors.black,
-                                    )
-                                  : trailingWidget!,
-                            )
-                          : nothing,
-                    ),
-                    const SizedBox(width: 15),
-                  ],
-                ),
-              ),
+            RNavigationBar(
+              iconButtonSize: RScaffold.iconButtonSize,
+              iconsColor: iconsColor,
+              onLeadingTap: onLeadingTap,
+              title: title,
+              trailingIcon: trailingIcon,
+              trailingWidget: trailingWidget,
+              onTrailingTap: onTrailingTap,
+            ),
             Expanded(child: child ?? nothing),
-            if (handleKeyBoard)
-              KeyboardSpacer(
-                handleSafeArea: handleSafeArea,
-                paddingAboveKeyboard: paddingAboveKeyboard,
-              ),
-            if(!handleKeyBoard && handleSafeArea)
-              SizedBox(height: Sizes.effectiveBottomPadding)
+            KeyboardSpacer(),
           ],
         ),
-      );
+      ),
+    );
+  }
+}
+
+class RNavigationBar extends StatelessWidget {
+  const RNavigationBar({
+    super.key,
+    required this.iconButtonSize,
+    required this.iconsColor,
+    required this.onLeadingTap,
+    required this.title,
+    required this.trailingIcon,
+    required this.trailingWidget,
+    required this.onTrailingTap,
+  });
+
+  final double iconButtonSize;
+  final Color? iconsColor;
+  final VoidCallback? onLeadingTap;
+  final Widget? title;
+  final IconData? trailingIcon;
+  final Widget? trailingWidget;
+  final VoidCallback? onTrailingTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: Sizes.screenPadding.top),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(width: 15),
+          SizedBox.square(
+            dimension: iconButtonSize,
+            child: (ModalRoute.of(context)!.canPop)
+                ? RButton(
+                    color: Colors.transparent,
+                    padding: EdgeInsets.zero,
+                    child: Icon(
+                      Icons.arrow_back_rounded,
+                      size: 24,
+                      color: iconsColor ?? Colors.black,
+                    ),
+                    onPressed: () {
+                      if (onLeadingTap == null) {
+                        Navigator.of(context).pop();
+                      } else {
+                        onLeadingTap!();
+                      }
+                    },
+                  )
+                : nothing,
+          ),
+          Expanded(
+            child: title != null ? Center(child: title!) : nothing,
+          ),
+          SizedBox.square(
+            dimension: iconButtonSize,
+            child: trailingIcon != null || trailingWidget != null
+                ? RButton(
+                    color: Colors.transparent,
+                    padding: EdgeInsets.zero,
+                    onPressed: () => onTrailingTap?.call(),
+                    child: trailingIcon != null
+                        ? Icon(
+                            trailingIcon,
+                            size: 24,
+                            color: iconsColor ?? Colors.black,
+                          )
+                        : trailingWidget!,
+                  )
+                : nothing,
+          ),
+          const SizedBox(width: 15),
+        ],
+      ),
+    );
+  }
 }

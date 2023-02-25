@@ -1,58 +1,73 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:right/right.dart';
 
+final avn = ValueNotifier(Offset.zero);
+final vn = ValueNotifier(Offset.zero);
 void main() {
   runApp(
     RApp(
-      child: RNavigator(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 124),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CupertinoTextField(),
-              const SizedBox(height: 8),
-              Builder(builder: (context) {
-                return RButton(
-                  child: const RText(text: "route"),
-                  onPressed: () {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    // SystemChannels.textInput.invokeMethod('TextInput.hide');
-                    context
-                        .findAncestorStateOfType<RNavigatorState>()!
-                        .add(ColoredBox(
-                          color: Colors.cyan,
-                          child: Center(
-                            child: RButton(
-                              child: const RText(text: "open bottom sheet"),
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  RBottomSheetRoute(
-                                    builder: (_) {
-                                      return SingleChildScrollView(
-                                        controller: _,
-                                        child: Container(),
-                                      );
-                                    },
-                                  ),
-                                );
-                              },
+      child: Navigator(
+        onGenerateRoute: (_) {
+          return RRoute(
+              child: RScaffold(
+            child: Column(
+              children: [
+                Expanded(child: Center(
+                  child: Builder(builder: (context) {
+                    return RButton(
+                      child: const Text('bottom_sheet'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          RBottomSheetRoute(
+                            builder: (c) {
+                              return SingleChildScrollView(
+                                controller: c,
+                                child: Container(
+                                  height: 500,
+                                  color: Colors.amber,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }),
+                )),
+                Builder(builder: (context) {
+                  return RButton(
+                    child: const Text('route'),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        RRoute(
+                          child: RScaffold(
+                            child: Container(
+                              height: 500,
+                              color: Colors.amber.withOpacity(0.1),
+                              child: const TextField(),
                             ),
                           ),
-                        ));
-                  },
-                );
-              }),
-              const SizedBox(height: 8),
-              RListTile(
-                child: const RText(text: "list tile"),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
+                        ),
+                      );
+                    },
+                  );
+                }),
+                Builder(builder: (context) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: Sizes.screenPadding.bottom),
+                    child: Container(
+                      child: TextField(),
+                      padding: EdgeInsets.all(8),
+                      color: Colors.blueAccent,
+                    ),
+                  );
+                }),
+              ],
+            ),
+          ));
+        },
       ),
     ),
   );

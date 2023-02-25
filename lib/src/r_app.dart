@@ -1,4 +1,8 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:right/src/utils/sizes.dart';
 
 class RApp extends StatelessWidget {
   final Widget child;
@@ -11,12 +15,14 @@ class RApp extends StatelessWidget {
       delegates: const <LocalizationsDelegate<dynamic>>[
         DefaultWidgetsLocalizations.delegate,
         DefaultMaterialLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
       ],
-      child: MediaQuery.fromWindow(
+      child: MediaQuery.fromView(
+        view: WidgetsBinding.instance.window,
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Overlay(
-            initialEntries: [OverlayEntry(builder: (context) => child)],
+            initialEntries: [OverlayEntry(builder: (context) => Material(child: child))],
           ),
         ),
       ),

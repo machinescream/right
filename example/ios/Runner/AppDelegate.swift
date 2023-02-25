@@ -9,7 +9,8 @@ import Flutter
   ) -> Bool {
     if #available(iOS 15.0, *) {
       let displayLink = CADisplayLink(target: self, selector: #selector(step))
-      displayLink.preferredFrameRateRange = CAFrameRateRange(minimum:120, maximum:120, preferred:120)
+      displayLink.preferredFrameRateRange = CAFrameRateRange(minimum:240, maximum:240, preferred:240)
+      print("Preferred frame rate range: \(displayLink.preferredFrameRateRange)")
       displayLink.add(to: .current, forMode: .default)
     }
     GeneratedPluginRegistrant.register(with: self)

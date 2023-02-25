@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:right/src/r_navigator.dart';
 import 'package:right/src/utils/sizes.dart';
 
-class RRoute<T> extends StatefulWidget {
+class RRoute<T> extends PageRoute<T> {
   final Widget child;
 
-  const RRoute({super.key, required this.child});
+  RRoute({required this.child});
+
+  var _ignoring = false;
 
   @override
-  State<RRoute<T>> createState() => _RRouteState<T>();
-}
+  Color? get barrierColor => null;
 
-class _RRouteState<T> extends State<RRoute<T>> with TickerProviderStateMixin {
-  var _ignoring = false;
-  final _maxWidth = Sizes.screenSize.width;
+  @override
+  String? get barrierLabel => null;
 
-  late final controller = AnimationController(
-    vsync: this,
-    duration: Duration(milliseconds: 300),
-    lowerBound: 0,
-    upperBound: _maxWidth,
-  );
+  @override
+  bool get opaque => false;
+
+  @override
+  bool get maintainState => true;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 300);
+
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+    return child;
+  }
 
   void _onHorizontalDragEnd(DragEndDetails upd, VoidCallback onClose) {
-    final val = controller.value;
-    final toLeft = val > 0.5 && upd.primaryVelocity! < 1000;
     setState(() {
       _ignoring = true;
     });
-    controller.animateTo(toLeft ? _maxWidth : 0.0).then((value) {
+    final val = controller!.value;
+    final toLeft = val > 0.5 && upd.primaryVelocity! < 1000;
+    controller!.animateTo(toLeft ? 1.0 : 0.0).then((value) {
       setState(() {
         _ignoring = false;
       });
@@ -39,52 +45,61 @@ class _RRouteState<T> extends State<RRoute<T>> with TickerProviderStateMixin {
   }
 
   void _onHorizontalDragUpdate(DragUpdateDetails upd) {
-    final initialValue = controller.value;
-    controller.value = initialValue - upd.delta.dx;
+    final initialValue = controller?.value ?? 1.0;
+    controller?.value = initialValue - (upd.delta.dx / Sizes.screenSize.width);
   }
 
   @override
-  void initState() {
-    super.initState();
-    controller.animateTo(_maxWidth);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: controller,
-      child: widget.child,
-      builder: (_, child) {
-        return Transform.translate(
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    final navigator = Navigator.of(context);
+    return SlideTransition(
+      transformHitTests: false,
+      position: animation.drive(
+        Tween(
+          begin: const Offset(1, 0),
+          end: const Offset(0, 0),
+        ),
+      ),
+      child: RepaintBoundary(
+        child: SlideTransition(
           transformHitTests: false,
-          offset: Offset(
-            Sizes.screenSize.width - controller.value,
-            0,
-          ),
-          child: IgnorePointer(
-            ignoring: _ignoring,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onHorizontalDragEnd: (upd) {
-                _onHorizontalDragEnd(
-                  upd,
-                  () => context
-                      .findAncestorStateOfType<RNavigatorState>()!
-                      .removeLast(),
-                );
-              },
-              onHorizontalDragUpdate: _onHorizontalDragUpdate,
-              child: child,
+          position: secondaryAnimation.drive(
+            Tween(
+              begin: const Offset(0, 0),
+              end: const Offset(-0.33, 0),
             ),
           ),
-        );
-      },
+          child: RepaintBoundary(
+            child: DecoratedBoxTransition(
+              position: DecorationPosition.foreground,
+              decoration: secondaryAnimation.drive(
+                DecorationTween(
+                  begin: BoxDecoration(color: Colors.transparent),
+                  end: BoxDecoration(color: Colors.black87),
+                ),
+              ),
+              child: navigator.canPop()
+                  ? IgnorePointer(
+                      ignoring: _ignoring,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onHorizontalDragEnd: (upd) {
+                          _onHorizontalDragEnd(upd, () => navigator.pop());
+                        },
+                        onHorizontalDragUpdate: _onHorizontalDragUpdate,
+                        child: child,
+                      ),
+                    )
+                  : child,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,9 +1,7 @@
 library right;
 
-export 'package:right/src/bottom_sheet/r_bottom_sheet.dart';
+export 'package:right/src/r_bottom_sheet.dart';
 export 'package:right/src/utils/sizes.dart';
-export 'package:right/src/utils/brightness_handler.dart';
-export 'package:right/src/utils/emojis_warm_up.dart';
 export 'package:right/src/utils/keyboard_spacer.dart';
 
 export 'package:right/src/r_route.dart';
@@ -14,4 +12,3 @@ export 'package:right/src/r_text.dart';
 export 'package:right/src/r_text_field.dart';
 export 'package:right/src/r_user_tile.dart';
 export 'package:right/src/r_app.dart';
-export 'package:right/src/r_navigator.dart';
