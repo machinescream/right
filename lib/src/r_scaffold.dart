@@ -55,7 +55,7 @@ class RScaffold extends StatelessWidget {
               onTrailingTap: onTrailingTap,
             ),
             Expanded(child: child ?? nothing),
-            KeyboardSpacer(key: key),
+            const KeyboardSpacer(),
           ],
         ),
       ),
