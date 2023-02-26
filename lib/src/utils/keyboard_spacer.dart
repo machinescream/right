@@ -24,15 +24,38 @@ class _KeyboardSpacerState extends State<KeyboardSpacer> with SingleTickerProvid
     upperBound: Sizes.screenSize.height,
   );
 
+  late final _mr = ModalRoute.of(context)!;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _mr.secondaryAnimation!.addListener(_animationListener);
+    });
+  }
+
+  void _animationListener() {
+    if (_mr.secondaryAnimation!.value == 1.0) {
+      _canAnimate = false;
+    }
+  }
+
   @override
   void dispose() {
+    _mr.secondaryAnimation!.removeListener(_animationListener);
     _controller.dispose();
     super.dispose();
   }
 
+  bool _canAnimate = false;
+
   @override
   Widget build(BuildContext context) {
-    final value = ModalRoute.of(context)!.isCurrent ? MediaQuery.of(context).viewInsets.bottom : 0.0;
+    var value = MediaQuery.of(context).viewInsets.bottom;
+    if (!_canAnimate) {
+      _canAnimate = value == 0.0 && _mr.isCurrent;
+    }
+    value = _canAnimate ? value : 0.0;
     return AnimatedBuilder(
       animation: _controller..value = value,
       builder: (context, child) {

@@ -1,9 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:right/src/r_button.dart';
 import 'package:right/src/utils/keyboard_spacer.dart';
 import 'package:right/src/utils/sizes.dart';
-
-import 'r_bottom_sheet.dart';
 
 class RScaffold extends StatelessWidget {
   final Color backGroundColor, iconsColor;
@@ -34,10 +33,10 @@ class RScaffold extends StatelessWidget {
       child: RawGestureDetector(
         behavior: HitTestBehavior.opaque,
         gestures: {
-          AllowMultipleGestureRecognizer: GestureRecognizerFactoryWithHandlers<AllowMultipleGestureRecognizer>(
-            () => AllowMultipleGestureRecognizer(), //constructor
-            (AllowMultipleGestureRecognizer instance) {
-              instance.onUpdate = (_) {
+          _AllowMultipleGestureRecognizer: GestureRecognizerFactoryWithHandlers<_AllowMultipleGestureRecognizer>(
+            () => _AllowMultipleGestureRecognizer(), //constructor
+            (_AllowMultipleGestureRecognizer instance) {
+              instance.onDown = (_) {
                 FocusManager.instance.primaryFocus?.unfocus();
               };
             },
@@ -56,7 +55,7 @@ class RScaffold extends StatelessWidget {
               onTrailingTap: onTrailingTap,
             ),
             Expanded(child: child ?? nothing),
-            KeyboardSpacer(),
+            KeyboardSpacer(key: key),
           ],
         ),
       ),
@@ -137,5 +136,12 @@ class RNavigationBar extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _AllowMultipleGestureRecognizer extends PanGestureRecognizer {
+  @override
+  void rejectGesture(int pointer) {
+    acceptGesture(pointer);
   }
 }

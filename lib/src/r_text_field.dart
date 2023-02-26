@@ -102,7 +102,6 @@ class _RTextFieldState extends State<RTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = widget.textStyle;
     final color = active ? widget.cursorColor : widget.inactiveColor;
     final border = OutlineInputBorder(
       gapPadding: 0,

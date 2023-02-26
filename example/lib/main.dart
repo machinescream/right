@@ -1,17 +1,15 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:right/right.dart';
 
-final avn = ValueNotifier(Offset.zero);
-final vn = ValueNotifier(Offset.zero);
-void main() {
+Future<void> main() async {
+  await Future.delayed(Duration(seconds: 1));
   runApp(
     RApp(
       child: Navigator(
         onGenerateRoute: (_) {
           return RRoute(
               child: RScaffold(
+            key: const ValueKey("main"),
             child: Column(
               children: [
                 Expanded(child: Center(
@@ -36,34 +34,39 @@ void main() {
                     );
                   }),
                 )),
-                Builder(builder: (context) {
-                  return RButton(
-                    child: const Text('route'),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        RRoute(
-                          child: RScaffold(
-                            child: Container(
-                              height: 500,
-                              color: Colors.amber.withOpacity(0.1),
-                              child: const TextField(),
+                Builder(
+                  builder: (context) {
+                    return RButton(
+                      child: const Text('route'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          RRoute(
+                            child: RScaffold(
+                              backGroundColor: Colors.black.withOpacity(0.1),
+                              child: Container(
+                                height: 500,
+                                color: Colors.amber.withOpacity(0.1),
+                                child: const TextField(),
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                }),
-                Builder(builder: (context) {
-                  return Padding(
-                    padding: EdgeInsets.only(bottom: Sizes.screenPadding.bottom),
-                    child: Container(
-                      child: TextField(),
-                      padding: EdgeInsets.all(8),
-                      color: Colors.blueAccent,
-                    ),
-                  );
-                }),
+                        );
+                      },
+                    );
+                  },
+                ),
+                Builder(
+                  builder: (context) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: Sizes.screenPadding.bottom),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        color: Colors.blueAccent,
+                        child: const TextField(),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ));

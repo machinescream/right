@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 abstract class Sizes {
   static Size get screenSize {

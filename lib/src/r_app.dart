@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:right/src/utils/sizes.dart';
 
 class RApp extends StatelessWidget {
   final Widget child;

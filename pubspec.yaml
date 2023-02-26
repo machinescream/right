@@ -1,10 +1,10 @@
 name: right
 description: UI kit for flutter apps
-version: 0.0.2
+version: 0.0.4
 homepage: null
 
 environment:
-  sdk: '>=2.18.5 <3.0.0'
+  sdk: '>=2.18.5 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
