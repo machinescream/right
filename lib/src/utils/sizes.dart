@@ -3,13 +3,11 @@ import 'package:flutter/widgets.dart';
 
 abstract class Sizes {
   static Size get screenSize {
-    final size = window.physicalSize / window.devicePixelRatio;
-    return size == Size.zero ? screenSize : size;
+    return window.physicalSize / window.devicePixelRatio;
   }
 
   static EdgeInsets get screenPadding {
-    final padding = EdgeInsets.fromWindowPadding(window.padding, window.devicePixelRatio);
-    return padding == EdgeInsets.zero ? screenPadding : padding;
+    return EdgeInsets.fromWindowPadding(window.padding, window.devicePixelRatio);
   }
 }
 

@@ -6,6 +6,8 @@ class RUserTile extends StatelessWidget {
   final String userName;
   final Color userAvatarBorderColor;
   final TextStyle? titleTextStyle;
+  final int avatarSize;
+  final EdgeInsets avatarPadding;
 
   const RUserTile({
     Key? key,
@@ -13,29 +15,33 @@ class RUserTile extends StatelessWidget {
     required this.userName,
     this.userAvatarBorderColor = Colors.cyan,
     this.titleTextStyle,
+    this.avatarSize = 40,
+    this.avatarPadding = const EdgeInsets.all(8.0),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox.square(
-          dimension: 34,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(width: 2.0, color: userAvatarBorderColor),
-              shape: BoxShape.circle,
-              image: imageUrl != null
-                  ? DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(imageUrl!),
-                    )
-                  : null,
+        Padding(
+          padding: avatarPadding,
+          child: SizedBox.square(
+            dimension: avatarSize.toDouble(),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.all(width: 2.0, color: userAvatarBorderColor),
+                shape: BoxShape.circle,
+                image: imageUrl != null
+                    ? DecorationImage(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(imageUrl!),
+                      )
+                    : null,
+              ),
+              child: imageUrl == null ? const Icon(Icons.person) : null,
             ),
-            child: imageUrl == null ? const Icon(Icons.person) : null,
           ),
         ),
-        const SizedBox(width: 20),
         Expanded(
           child: RText(
             text: userName,

@@ -9,7 +9,11 @@ Future<void> main() async {
         onGenerateRoute: (_) {
           return RRoute(
               child: RScaffold(
-            key: const ValueKey("main"),
+            appBarColor: Colors.blue,
+            title: const RText(
+              text: 'Demo',
+              style: TextStyle(color: Colors.white),
+            ),
             child: Column(
               children: [
                 Expanded(child: Center(
@@ -19,13 +23,27 @@ Future<void> main() async {
                       onPressed: () {
                         Navigator.of(context).push(
                           RBottomSheetRoute(
-                            builder: (c) {
-                              return SingleChildScrollView(
-                                controller: c,
-                                child: Container(
-                                  height: 500,
-                                  color: Colors.amber,
-                                ),
+                            backgroundColor: Colors.black,
+                            builder: (controller) {
+                              return ListView.builder(
+                                itemBuilder: (ctx, index) {
+                                  return RListTile(
+                                    child: RUserTile(
+                                      avatarSize: 34,
+                                      avatarPadding: const EdgeInsets.all(8),
+                                      userName: "User $index",
+                                      imageUrl: "https://picsum.photos/200/300",
+                                      userAvatarBorderColor: Colors.blue,
+                                      titleTextStyle: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                  );
+                                },
+                                itemCount: 100,
+                                controller: controller,
                               );
                             },
                           ),
@@ -42,17 +60,15 @@ Future<void> main() async {
                         Navigator.of(context).push(
                           RRoute(
                             child: RScaffold(
-                              backGroundColor: Colors.black.withOpacity(0.1),
                               child: Container(
-                                height: 500,
-                                color: Colors.amber.withOpacity(0.1),
-                                child: Column(
+                                height: 800,
+                                child: const Column(
                                   children: [
                                     Expanded(
                                         child: Center(
                                       child: Text('13'),
                                     )),
-                                    const TextField(),
+                                    TextField(),
                                   ],
                                 ),
                               ),

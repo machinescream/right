@@ -5,7 +5,7 @@ import 'package:right/src/utils/keyboard_spacer.dart';
 import 'package:right/src/utils/sizes.dart';
 
 class RScaffold extends StatelessWidget {
-  final Color backGroundColor, iconsColor;
+  final Color backGroundColor, iconsColor, appBarColor;
   final VoidCallback? onLeadingTap, onTrailingTap;
   final Widget? title, child, trailingWidget;
   final IconData? leadingIcon, trailingIcon;
@@ -21,6 +21,7 @@ class RScaffold extends StatelessWidget {
     this.onTrailingTap,
     this.trailingWidget,
     this.leadingIcon,
+    this.appBarColor = Colors.white,
   });
 
   static const appBarHeight = 54.0;
@@ -85,55 +86,58 @@ class RNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: Sizes.screenPadding.top),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(width: 15),
-          SizedBox.square(
-            dimension: iconButtonSize,
-            child: (ModalRoute.of(context)!.canPop)
-                ? RButton(
-                    color: Colors.transparent,
-                    padding: EdgeInsets.zero,
-                    child: Icon(
-                      Icons.arrow_back_rounded,
-                      size: 24,
-                      color: iconsColor ?? Colors.black,
-                    ),
-                    onPressed: () {
-                      if (onLeadingTap == null) {
-                        Navigator.of(context).pop();
-                      } else {
-                        onLeadingTap!();
-                      }
-                    },
-                  )
-                : nothing,
-          ),
-          Expanded(
-            child: title != null ? Center(child: title!) : nothing,
-          ),
-          SizedBox.square(
-            dimension: iconButtonSize,
-            child: trailingIcon != null || trailingWidget != null
-                ? RButton(
-                    color: Colors.transparent,
-                    padding: EdgeInsets.zero,
-                    onPressed: () => onTrailingTap?.call(),
-                    child: trailingIcon != null
-                        ? Icon(
-                            trailingIcon,
-                            size: 24,
-                            color: iconsColor ?? Colors.black,
-                          )
-                        : trailingWidget!,
-                  )
-                : nothing,
-          ),
-          const SizedBox(width: 15),
-        ],
+    return ColoredBox(
+      color: context.findAncestorWidgetOfExactType<RScaffold>()!.appBarColor,
+      child: Padding(
+        padding: EdgeInsets.only(top: Sizes.screenPadding.top),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(width: 15),
+            SizedBox.square(
+              dimension: iconButtonSize,
+              child: (ModalRoute.of(context)!.canPop)
+                  ? RButton(
+                      color: Colors.transparent,
+                      padding: EdgeInsets.zero,
+                      child: Icon(
+                        Icons.arrow_back_rounded,
+                        size: 24,
+                        color: iconsColor ?? Colors.black,
+                      ),
+                      onPressed: () {
+                        if (onLeadingTap == null) {
+                          Navigator.of(context).pop();
+                        } else {
+                          onLeadingTap!();
+                        }
+                      },
+                    )
+                  : nothing,
+            ),
+            Expanded(
+              child: title != null ? Center(child: title!) : nothing,
+            ),
+            SizedBox.square(
+              dimension: iconButtonSize,
+              child: trailingIcon != null || trailingWidget != null
+                  ? RButton(
+                      color: Colors.transparent,
+                      padding: EdgeInsets.zero,
+                      onPressed: () => onTrailingTap?.call(),
+                      child: trailingIcon != null
+                          ? Icon(
+                              trailingIcon,
+                              size: 24,
+                              color: iconsColor ?? Colors.black,
+                            )
+                          : trailingWidget!,
+                    )
+                  : nothing,
+            ),
+            const SizedBox(width: 15),
+          ],
+        ),
       ),
     );
   }
