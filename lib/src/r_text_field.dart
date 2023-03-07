@@ -131,7 +131,9 @@ class _RTextFieldState extends State<RTextField> {
         onSubmitted: widget.onDone,
         scrollPadding: EdgeInsets.zero,
         expands: widget.expand,
-        textCapitalization: widget.capitalize ? TextCapitalization.words : TextCapitalization.none,
+        textCapitalization: widget.capitalize
+            ? TextCapitalization.words
+            : TextCapitalization.none,
         autofocus: widget.autoFocus,
         controller: widget.controller,
         clipBehavior: Clip.none,

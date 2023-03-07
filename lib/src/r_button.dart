@@ -42,8 +42,9 @@ class _RButtonState extends State<RButton> with SingleTickerProviderStateMixin {
       value: 0.0,
       vsync: this,
     );
-    _opacityAnimation =
-        _animationController.drive(CurveTween(curve: Curves.decelerate)).drive(_opacityTween);
+    _opacityAnimation = _animationController
+        .drive(CurveTween(curve: Curves.decelerate))
+        .drive(_opacityTween);
     _setTween();
   }
 

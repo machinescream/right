@@ -22,7 +22,8 @@ class RText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.replaceAll(' ', '\u00A0'),
-      textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false),
+      textHeightBehavior:
+          const TextHeightBehavior(applyHeightToFirstAscent: false),
       style: style,
       textScaleFactor: textScaleFactor,
       overflow: overflow,
@@ -31,4 +32,3 @@ class RText extends StatelessWidget {
     );
   }
 }
-

@@ -7,7 +7,8 @@ abstract class Sizes {
   }
 
   static EdgeInsets get screenPadding {
-    return EdgeInsets.fromWindowPadding(window.padding, window.devicePixelRatio);
+    return EdgeInsets.fromWindowPadding(
+        window.padding, window.devicePixelRatio);
   }
 }
 

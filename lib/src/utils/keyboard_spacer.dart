@@ -16,7 +16,8 @@ class KeyboardSpacer extends StatefulWidget {
   State<KeyboardSpacer> createState() => _KeyboardSpacerState();
 }
 
-class _KeyboardSpacerState extends State<KeyboardSpacer> with SingleTickerProviderStateMixin {
+class _KeyboardSpacerState extends State<KeyboardSpacer>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: Duration.zero,

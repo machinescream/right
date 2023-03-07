@@ -19,7 +19,9 @@ class RApp extends StatelessWidget {
         child: Directionality(
           textDirection: TextDirection.ltr,
           child: Overlay(
-            initialEntries: [OverlayEntry(builder: (context) => Material(child: child))],
+            initialEntries: [
+              OverlayEntry(builder: (context) => Material(child: child))
+            ],
           ),
         ),
       ),

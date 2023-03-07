@@ -34,7 +34,8 @@ class RScaffold extends StatelessWidget {
       child: RawGestureDetector(
         behavior: HitTestBehavior.opaque,
         gestures: {
-          _AllowMultipleGestureRecognizer: GestureRecognizerFactoryWithHandlers<_AllowMultipleGestureRecognizer>(
+          _AllowMultipleGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+              _AllowMultipleGestureRecognizer>(
             () => _AllowMultipleGestureRecognizer(), //constructor
             (_AllowMultipleGestureRecognizer instance) {
               instance.onDown = (_) {

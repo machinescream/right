@@ -82,7 +82,8 @@ Future<void> main() async {
                 Builder(
                   builder: (context) {
                     return Padding(
-                      padding: EdgeInsets.only(bottom: Sizes.screenPadding.bottom),
+                      padding:
+                          EdgeInsets.only(bottom: Sizes.screenPadding.bottom),
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         color: Colors.blueAccent,

@@ -14,7 +14,8 @@ class RListTile extends StatefulWidget {
   State<RListTile> createState() => _RListTileState();
 }
 
-class _RListTileState extends State<RListTile> with SingleTickerProviderStateMixin {
+class _RListTileState extends State<RListTile>
+    with SingleTickerProviderStateMixin {
   static const Duration kFadeOutDuration = Duration(milliseconds: 120);
   static const Duration kFadeInDuration = Duration(milliseconds: 180);
   final Tween<double> _opacityTween = Tween<double>(begin: 0.0);
@@ -30,8 +31,9 @@ class _RListTileState extends State<RListTile> with SingleTickerProviderStateMix
       value: 0.0,
       vsync: this,
     );
-    _opacityAnimation =
-        _animationController.drive(CurveTween(curve: Curves.decelerate)).drive(_opacityTween);
+    _opacityAnimation = _animationController
+        .drive(CurveTween(curve: Curves.decelerate))
+        .drive(_opacityTween);
     _setTween();
   }
 
