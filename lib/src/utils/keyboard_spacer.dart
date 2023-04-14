@@ -26,31 +26,45 @@ class _KeyboardSpacerState extends State<KeyboardSpacer>
   );
 
   late final _mr = ModalRoute.of(context)!;
+  late final _routeAnimation = _mr.secondaryAnimation!;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (mounted) {
+        _routeAnimation.addListener(_checkRoute);
+      }
+    });
+  }
+
+  bool _canAnimate = true;
 
   void _checkRoute() {
-    if (_mr.secondaryAnimation!.value == 1.0) {
-      _canAnimate = false;
+    if (_routeAnimation.value == 1.0) {
+      setState(() {
+        _canAnimate = false;
+      });
     }
-    if (_mr.secondaryAnimation!.value == 0.0 && _mr.isCurrent && value == 0.0) {
-      _canAnimate = true;
+    if (_routeAnimation.value == 0.0) {
+      setState(() {
+        _canAnimate = true;
+      });
     }
   }
 
   @override
   void dispose() {
+    _routeAnimation.removeListener(_checkRoute);
     _controller.dispose();
     super.dispose();
   }
 
-  bool _canAnimate = true;
-  double value = 0.0;
-
   @override
   Widget build(BuildContext context) {
-    value = MediaQuery.of(context).viewInsets.bottom;
-    _checkRoute();
+    if (!_canAnimate) return nothing;
     return AnimatedBuilder(
-      animation: _controller..value = _canAnimate ? value : 0.0,
+      animation: _controller..value = MediaQuery.of(context).viewInsets.bottom,
       builder: (context, child) {
         var height = _controller.value;
         if (height > 100) {

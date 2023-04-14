@@ -62,12 +62,21 @@ Future<void> main() async {
                             child: RScaffold(
                               child: Container(
                                 height: 800,
-                                child: const Column(
+                                child: Column(
                                   children: [
                                     Expanded(
-                                        child: Center(
-                                      child: Text('13'),
-                                    )),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          color: Colors.green,
+                                          child: const Center(
+                                            child: Text('13'),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                     TextField(),
                                   ],
                                 ),
