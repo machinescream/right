@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:right/right.dart';
 import 'package:superellipse_shape/superellipse_shape.dart';
 
-class RButton extends StatefulWidget {
+class RButton extends StatefulWidget implements Right {
   const RButton({
     super.key,
     required this.child,

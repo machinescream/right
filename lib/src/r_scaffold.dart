@@ -1,10 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:right/right.dart';
 import 'package:right/src/r_button.dart';
-import 'package:right/src/utils/keyboard_spacer.dart';
-import 'package:right/src/utils/sizes.dart';
 
-class RScaffold extends StatelessWidget {
+class RScaffold extends StatelessWidget implements Right {
   final Color backGroundColor, iconsColor, appBarColor;
   final VoidCallback? onLeadingTap, onTrailingTap;
   final Widget? title, child, trailingWidget;

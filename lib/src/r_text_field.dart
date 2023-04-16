@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+//TODO: refactor
 class RTextField extends StatefulWidget {
   final void Function(String value)? onChanged;
   final String? hint;
@@ -119,53 +120,50 @@ class _RTextFieldState extends State<RTextField> {
           )
         : null;
 
-    return Material(
-      color: Colors.transparent,
-      child: TextField(
-        showCursor: widget.showCursor,
-        readOnly: widget.readOnly ?? false,
-        onTap: widget.onTap,
-        textAlign: widget.textAlign ?? TextAlign.left,
-        focusNode: _fn,
-        enabled: widget.enabled,
-        onSubmitted: widget.onDone,
-        scrollPadding: EdgeInsets.zero,
-        expands: widget.expand,
-        textCapitalization: widget.capitalize
-            ? TextCapitalization.words
-            : TextCapitalization.none,
-        autofocus: widget.autoFocus,
-        controller: widget.controller,
-        clipBehavior: Clip.none,
-        onChanged: (text) {
-          widget.onChanged?.call(text);
-          _timer?.cancel();
-          _timer = Timer(const Duration(milliseconds: 300), () {
-            if (mounted) {
-              widget.onEndEditing?.call(text);
-            }
-          });
-        },
-        maxLength: widget.maxLength,
-        inputFormatters: widget.formatters,
-        maxLines: widget.expand ? null : widget.maxLines,
-        minLines: widget.expand ? null : 1,
-        style: widget.textStyle,
-        cursorColor: widget.cursorColor,
-        keyboardType: widget.textInputType,
-        textInputAction: widget.action,
-        decoration: InputDecoration(
-          isDense: true,
-          hintStyle: (widget.hintStyle ?? widget.textStyle),
-          hintText: widget.hint,
-          prefixIcon: prefixIcon,
-          contentPadding: widget.padding,
-          prefixIconConstraints: const BoxConstraints(),
-          border: border,
-          focusedBorder: border,
-          enabledBorder: border,
-          errorText: widget.errorText,
-        ),
+    return TextField(
+      showCursor: widget.showCursor,
+      readOnly: widget.readOnly ?? false,
+      onTap: widget.onTap,
+      textAlign: widget.textAlign ?? TextAlign.left,
+      focusNode: _fn,
+      enabled: widget.enabled,
+      onSubmitted: widget.onDone,
+      scrollPadding: EdgeInsets.zero,
+      expands: widget.expand,
+      textCapitalization: widget.capitalize
+          ? TextCapitalization.words
+          : TextCapitalization.none,
+      autofocus: widget.autoFocus,
+      controller: widget.controller,
+      clipBehavior: Clip.none,
+      onChanged: (text) {
+        widget.onChanged?.call(text);
+        _timer?.cancel();
+        _timer = Timer(const Duration(milliseconds: 300), () {
+          if (mounted) {
+            widget.onEndEditing?.call(text);
+          }
+        });
+      },
+      maxLength: widget.maxLength,
+      inputFormatters: widget.formatters,
+      maxLines: widget.expand ? null : widget.maxLines,
+      minLines: widget.expand ? null : 1,
+      style: widget.textStyle,
+      cursorColor: widget.cursorColor,
+      keyboardType: widget.textInputType,
+      textInputAction: widget.action,
+      decoration: InputDecoration(
+        isDense: true,
+        hintStyle: (widget.hintStyle ?? widget.textStyle),
+        hintText: widget.hint,
+        prefixIcon: prefixIcon,
+        contentPadding: widget.padding,
+        prefixIconConstraints: const BoxConstraints(),
+        border: border,
+        focusedBorder: border,
+        enabledBorder: border,
+        errorText: widget.errorText,
       ),
     );
   }

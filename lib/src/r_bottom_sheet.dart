@@ -1,9 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:right/src/utils/sizes.dart';
+import 'package:right/right.dart';
+
+typedef BuilderWithScrollController = Widget Function(
+    ScrollController controller);
 
 class RBottomSheetRoute<T> extends PopupRoute<T> {
-  final Widget Function(ScrollController controller) builder;
+  final BuilderWithScrollController builder;
   final double openPercentage;
   final Color backgroundColor;
   final double borderRadius;
@@ -11,7 +14,7 @@ class RBottomSheetRoute<T> extends PopupRoute<T> {
   RBottomSheetRoute({
     required this.builder,
     this.openPercentage = 0.5,
-    this.backgroundColor = Colors.red,
+    this.backgroundColor = Colors.white,
     this.borderRadius = 24,
   });
 

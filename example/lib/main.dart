@@ -4,13 +4,13 @@ import 'package:right/right.dart';
 Future<void> main() async {
   await Future.delayed(Duration(seconds: 1));
   runApp(
-    RApp(
+    Right.app(
       child: Navigator(
         onGenerateRoute: (_) {
-          return RRoute(
-              child: RScaffold(
+          return Right.route(
+              child: Right.scaffold(
             appBarColor: Colors.blue,
-            title: const RText(
+            title: const Right.text(
               text: 'Demo',
               style: TextStyle(color: Colors.white),
             ),
@@ -18,23 +18,23 @@ Future<void> main() async {
               children: [
                 Expanded(child: Center(
                   child: Builder(builder: (context) {
-                    return RButton(
+                    return Right.button(
                       child: const Text('bottom_sheet'),
                       onPressed: () {
                         Navigator.of(context).push(
-                          RBottomSheetRoute(
+                          Right.bottomSheet(
                             backgroundColor: Colors.black,
                             builder: (controller) {
                               return ListView.builder(
                                 itemBuilder: (ctx, index) {
-                                  return RListTile(
-                                    child: RUserTile(
+                                  return Right.listTile(
+                                    child: Right.userTile(
                                       avatarSize: 34,
                                       avatarPadding: const EdgeInsets.all(8),
                                       userName: "User $index",
                                       imageUrl: "https://picsum.photos/200/300",
                                       userAvatarBorderColor: Colors.blue,
-                                      titleTextStyle: const TextStyle(
+                                      textStyle: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
                                       ),
@@ -54,12 +54,12 @@ Future<void> main() async {
                 )),
                 Builder(
                   builder: (context) {
-                    return RButton(
+                    return Right.button(
                       child: const Text('route'),
                       onPressed: () {
                         Navigator.of(context).push(
-                          RRoute(
-                            child: RScaffold(
+                          Right.route(
+                            child: Right.scaffold(
                               child: Container(
                                 height: 800,
                                 child: Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
+import 'package:right/right.dart';
 
-class RText extends StatelessWidget {
+class RText extends StatelessWidget implements Right {
   final String text;
   final TextStyle? style;
   final double? textScaleFactor;
@@ -9,8 +10,8 @@ class RText extends StatelessWidget {
   final int? maxLines;
 
   const RText({
-    required this.text,
     Key? key,
+    required this.text,
     this.style,
     this.textScaleFactor,
     this.overflow,

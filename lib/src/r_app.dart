@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:right/right.dart';
 
-class RApp extends StatelessWidget {
+class RApp extends StatelessWidget implements Right {
   final Widget child;
   const RApp({super.key, required this.child});
 

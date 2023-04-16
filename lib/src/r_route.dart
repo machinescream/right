@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:right/src/utils/sizes.dart';
+import 'package:right/right.dart';
 
 class RRoute<T> extends PageRoute<T> {
   final Widget child;

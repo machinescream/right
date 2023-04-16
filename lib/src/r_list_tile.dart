@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:right/right.dart';
 
-class RListTile extends StatefulWidget {
+class RListTile extends StatefulWidget implements Right {
   const RListTile({
     Key? key,
     required this.child,

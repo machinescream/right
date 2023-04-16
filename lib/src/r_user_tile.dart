@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:right/right.dart';
 import 'package:right/src/r_text.dart';
 
-class RUserTile extends StatelessWidget {
+class RUserTile extends StatelessWidget implements Right {
   final String? imageUrl;
   final String userName;
   final Color userAvatarBorderColor;
-  final TextStyle? titleTextStyle;
+  final TextStyle? textStyle;
   final int avatarSize;
   final EdgeInsets avatarPadding;
 
   const RUserTile({
-    Key? key,
+    super.key,
     this.imageUrl,
     required this.userName,
-    this.userAvatarBorderColor = Colors.cyan,
-    this.titleTextStyle,
+    this.userAvatarBorderColor = Colors.transparent,
+    this.textStyle,
     this.avatarSize = 40,
     this.avatarPadding = const EdgeInsets.all(8.0),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class RUserTile extends StatelessWidget {
         Expanded(
           child: RText(
             text: userName,
-            style: titleTextStyle,
+            style: textStyle,
             textScaleFactor: 1,
             overflow: TextOverflow.ellipsis,
             textWidthBasis: TextWidthBasis.parent,
